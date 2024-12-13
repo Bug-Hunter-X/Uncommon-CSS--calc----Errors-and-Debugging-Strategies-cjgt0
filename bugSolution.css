@@ -1,0 +1,45 @@
+The solution involves carefully checking unit consistency, using parentheses to control operator precedence, and simplifying nested `calc()` expressions where possible.  For example, instead of `width: calc(calc(100% - 20px) - 10px);`, it's better to simplify to `width: calc(100% - 30px);`. Always verify the calculations with browser developer tools, and ensure that parent element dimensions are explicitly set when using percentages in `calc()` expressions.
+
+```css
+/* bug.css - Demonstrates problematic calc() usage */
+#container {
+  width: 500px;
+}
+
+#element {
+  width: calc(100% - 20px - 10px); /* Incorrect order of operations */
+  background-color: lightblue;
+}
+
+#element2 {
+  width: calc(100% - 20em); /* Unit mismatch */
+  background-color: lightgreen;
+}
+
+#element3 {
+  width: calc(calc(100% - 20px) - 10px); /* Nested calc() */
+  background-color: lightcoral;
+}
+```
+
+```css
+/* bugSolution.css - Corrected calc() usage */
+#container {
+  width: 500px;
+}
+
+#element {
+  width: calc(100% - 30px); /* Corrected order of operations */
+  background-color: lightblue;
+}
+
+#element2 {
+  width: calc(100% - 320px); /*Consistent unit*/
+  background-color: lightgreen;
+}
+
+#element3 {
+  width: calc(100% - 30px); /* Simplified nested calc() */
+  background-color: lightcoral;
+}
+```
